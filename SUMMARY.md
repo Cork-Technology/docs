@@ -37,24 +37,10 @@
 
 * [Frequently Asked Questions](faq/frequently-asked-questions.md)
 
-## Integrate with Cork <a href="#integrate" id="integrate"></a>
-
-* [Cork V1 Integration Guides](integrate/v1/README.md)
-  * [Overview](integrate/v1/overview.md)
-  * [Quickstart](integrate/v1/quickstart/README.md)
-    * [How to Open a Market](integrate/v1/quickstart/how-to-open-a-market.md)
-    * [How to Deploy Liquidity](integrate/v1/quickstart/how-to-deploy-liquidity.md)
-  * [Use Cases & Snippets](integrate/v1/use-cases-and-snippets.md)
-
 ## Cork Smart Contracts <a href="#smart-contracts" id="smart-contracts"></a>
 
 * [Audits](smart-contracts/audits.md)
 * [Phoenix Deployments](smart-contracts/phoenix-deployments.md)
-* [Cork Phoenix](smart-contracts/phoenix/README.md)
-  * [Overview](smart-contracts/phoenix/overview.md)
-  * [Live Deployments (V1)](smart-contracts/phoenix/live-deployments.md)
-  * [Test Deployments](smart-contracts/phoenix/test-deployments.md)
-  * [Formal Verification](smart-contracts/phoenix/formal-verification.md)
 
 ## External links
 
