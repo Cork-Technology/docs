@@ -18,8 +18,3 @@ description: Information on smart contract risk and audits
 
 Yes. Any changes to the code will undergo external review. Any smart contract upgrades will be audited.
 
-
-
-## Is Cork running a bug bounty program?
-
-Yes! Cork will shortly announce an updated bug bounty program for Phoenix.
