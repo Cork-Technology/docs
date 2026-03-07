@@ -3,7 +3,6 @@
 ## Cork Overview <a href="#overview" id="overview"></a>
 
 * [What is Cork?](README.md)
-* [How Cork works](overview/how-cork-works.md)
 
 ## Core Concepts
 
@@ -12,14 +11,12 @@
 * [Principal Token](core-concepts/principal-token.md)
 * [Reference Asset](core-concepts/reference-asset.md)
 * [Collateral Asset](core-concepts/collateral-asset.md)
-* [Trade cPTs & cSTs](core-concepts/trade-cpts-and-csts.md)
 * [Fees](core-concepts/fees.md)
 * [Target Assets & Use Cases](core-concepts/target-assets-and-use-cases.md)
 * [Whitelist Functionality](core-concepts/whitelist-functionality.md)
 
 ## User Guides
 
-* [Buy & Sell Cover](user-guides/buy-and-sell-cover.md)
 * [Exercise Swaps](user-guides/exercise-swaps/README.md)
   * [Backup - Exercise Swaps (without dApp)](user-guides/exercise-swaps/backup-exercise-swaps-without-dapp.md)
   * [Exercise Swap Tokens (without dApp)](user-guides/exercise-swaps/exercise-swap-tokens-without-dapp.md)

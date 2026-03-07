@@ -10,11 +10,6 @@ Cork Phoenix uses the Safe CREATE2 Deployer (`0x914d7Fec6aaC8cd542e72Bca78B30650
 Always verify contract addresses against this page or the [phoenix repo](https://github.com/Cork-Technology/phoenix) before interacting. Cork will never ask you to send funds to an address not listed here.
 {% endhint %}
 
-## Ethereum Mainnet
-
-* **ChainID:** 1
-* **Explorer:** [https://etherscan.io/](https://etherscan.io/)
-
 ### Core Contracts
 
 | Contract                         | Address                                                                                                                 | Role                                                                                              |
