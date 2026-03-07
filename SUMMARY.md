@@ -51,7 +51,8 @@
 * [Audits](smart-contracts/audits.md)
 * [Cork Phoenix](smart-contracts/phoenix/README.md)
   * [Overview](smart-contracts/phoenix/overview.md)
-  * [Live Deployments](smart-contracts/phoenix/live-deployments.md)
+  * [Phoenix Deployments](smart-contracts/phoenix/phoenix-deployments.md)
+  * [Live Deployments (V1)](smart-contracts/phoenix/live-deployments.md)
   * [Test Deployments](smart-contracts/phoenix/test-deployments.md)
   * [Formal Verification](smart-contracts/phoenix/formal-verification.md)
 
