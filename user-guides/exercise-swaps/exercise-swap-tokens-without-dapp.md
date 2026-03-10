@@ -15,31 +15,31 @@ This **"Exercise" operation** on Cork:
 * Releases an equivalent amount of [**Collateral Asset**](../../core-concepts/collateral-asset.md) from one of many [**Cork Pools**](../../core-concepts/cork-pool.md)
   * This amount is the same as the Cork [**Swap Token**](../../core-concepts/swap-token.md) exercised, minus a nominal swap fee.
 * Locks up a fair amount of your [**Reference Asset**](../../core-concepts/reference-asset.md) in that [**Cork Pool**](../../core-concepts/cork-pool.md) in exchange.
-  * This amount is determined by a swap rate, which is based on live redemption values between both assets.
+  * This amount is determined by the Exchange Rate, which is based on live redemption values between both assets.
 
 
 
-When exercising your cover, you may choose to specify either the:
+When exercising your Cork Swap Token (cST), you may choose to specify either the:
 
 * amount of [Reference Asset](../../core-concepts/reference-asset.md) to swap/spend, or the
 * amount of [Swap Token](../../core-concepts/swap-token.md) to exercise/spend.
 
-Either way, you will need to account for the **Variation Margin**, which is caused by the difference between the current Swap Rate, and the final Swap Rate during settlement (i.e. transaction blockheight).
+Either way, you will need to account for the **Variation Margin**, which is caused by the difference between the current Exchange Rate, and the final Exchange Rate during settlement (i.e. transaction blockheight).
 
 
 
 ### Variation Margin
 
-The Cork Swap Rate is dynamic and driven by a Rate-Oracle.
+The Cork Exchange Rate is dynamic and driven by a Rate-Oracle.
 
-* If the [**Reference Asset**](../../core-concepts/reference-asset.md) has lost its relative value against the [**Collateral Asset**](../../core-concepts/collateral-asset.md), the Swap Rate decreases/falls.
+* If the [**Reference Asset**](../../core-concepts/reference-asset.md) has lost its relative value against the [**Collateral Asset**](../../core-concepts/collateral-asset.md), the Exchange Rate decreases/falls.
   * As a result, exercising each [**Swap Token**](../../core-concepts/swap-token.md)—including those operations pending in the mempool—would consume a **greater** amount of the [**Reference Asset**](../../core-concepts/reference-asset.md) per token exercised. This difference is referred to as the variation margin.
   * ~~On the contrary, swapping each~~ [~~**Reference Asset**~~](../../core-concepts/reference-asset.md)~~—including those operations pending in the mempool—would consume a smaller amount of the~~ [~~**Swap Token**~~](../../core-concepts/swap-token.md)~~, per asset exercised. This difference is also referred to as the variation margin.~~
-* If the [**Reference Asset**](../../core-concepts/reference-asset.md) has improved in its relative value against the [**Collateral Asset**](../../core-concepts/collateral-asset.md), the Swap Rate increases/rises.
+* If the [**Reference Asset**](../../core-concepts/reference-asset.md) has improved in its relative value against the [**Collateral Asset**](../../core-concepts/collateral-asset.md), the Exchange Rate increases/rises.
   * As a result, swapping each [**Reference Asset**](../../core-concepts/reference-asset.md) —including those operations pending in the mempool—would consume a **greater** amount of the Cork [**Swap Token**](../../core-concepts/swap-token.md), per asset swapped. This difference is referred to as the variation margin.
   * ~~On the contrary, exercising each~~ [~~**Swap Token**~~](../../core-concepts/swap-token.md)~~—including those operations pending in the mempool—would consume a smaller amount of the~~ [~~**Reference Asset**~~](../../core-concepts/reference-asset.md) ~~per token exercised. This difference is also referred to as the variation margin.~~
 
-This variation margin depends on the prevailing Cork Swap Rate at the execution block-height, which depends on gas fees and network conditions.
+This variation margin depends on the prevailing Cork Exchange Rate at the execution block-height, which depends on gas fees and network conditions.
 
 As there is a chance that a **greater** amount is required for each operation to succeed, users must provision an additional amount, called the Spare Allowance, within each submitted transaction.
 

@@ -20,7 +20,6 @@
 * [Exercise Swaps](user-guides/exercise-swaps/README.md)
   * [Backup - Exercise Swaps (without dApp)](user-guides/exercise-swaps/backup-exercise-swaps-without-dapp.md)
   * [Exercise Swap Tokens (without dApp)](user-guides/exercise-swaps/exercise-swap-tokens-without-dapp.md)
-* [Repurchase](user-guides/repurchase.md)
 * [Provide Liquidity](user-guides/provide-liquidity/README.md)
   * [Mint Tokens](user-guides/provide-liquidity/mint-tokens.md)
   * [Mint Tokens (without dApp)](user-guides/provide-liquidity/mint-tokens-without-dapp.md)

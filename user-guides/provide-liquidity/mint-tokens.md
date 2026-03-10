@@ -44,14 +44,10 @@ You may choose to **mint Cork** [**Principal Tokens**](../../core-concepts/princ
 
 ## Mint Both Principal & Swap Token
 
-🎥 **Watch the video below** to learn how to use the dApp to **mint both principal & swap tokens** and **resell the swap tokens** (on Airswap) to earn a premium:
-
-Coming Soon
+To mint both Cork Principal Tokens (cPT) and Cork Swap Tokens (cST), deposit Collateral Assets into a Cork Pool via the dApp. You can then resell the Cork Swap Tokens (e.g. on Airswap OTC) to earn a premium.
 
 ***
 
 ## Buy Principal Token only
 
-🎥 **Watch the video below** to learn how to use the dApp to **buy principal tokens** (on Airswap) at a discount, to earn an implied fixed yield:
-
-Coming Soon
+To buy Cork Principal Tokens at a discount, purchase them from a resale market (such as Airswap OTC). At maturity, redeem them for the underlying Collateral Asset to earn an implied fixed yield.
