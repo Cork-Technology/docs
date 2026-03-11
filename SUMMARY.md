@@ -38,6 +38,15 @@
 * [Audits](smart-contracts/audits.md)
 * [Phoenix Deployments](smart-contracts/phoenix-deployments.md)
 
+## Developers
+
+* [Quick Start](developers/quick-start.md)
+* [Contract Reference](developers/contract-reference/README.md)
+  * [CorkAdapter](developers/contract-reference/cork-adapter.md)
+  * [CorkPoolManager](developers/contract-reference/cork-pool-manager.md)
+  * [Admin & Governance](developers/contract-reference/admin-and-governance.md)
+* [API Reference](developers/api-reference.md)
+
 ## External links
 
 * [Website](https://www.cork.tech/)
