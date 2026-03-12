@@ -18,15 +18,11 @@
 ## User Guides
 
 * [Exercise Swaps](user-guides/exercise-swaps/README.md)
-  * [Backup - Exercise Swaps (without dApp)](user-guides/exercise-swaps/backup-exercise-swaps-without-dapp.md)
-  * [Exercise Swap Tokens (without dApp)](user-guides/exercise-swaps/exercise-swap-tokens-without-dapp.md)
 * [Provide Liquidity](user-guides/provide-liquidity/README.md)
   * [Mint Tokens](user-guides/provide-liquidity/mint-tokens.md)
   * [Mint Tokens (without dApp)](user-guides/provide-liquidity/mint-tokens-without-dapp.md)
   * [Mint Tokens (without dApp or Batch-Capable Wallet)](user-guides/provide-liquidity/mint-tokens-without-dapp-or-batch-capable-wallet.md)
-  * [Backup - Mint Swap Token (without dApp)](user-guides/provide-liquidity/backup-mint-swap-token-without-dapp.md)
   * [Unwind Tokens (without dApp)](user-guides/provide-liquidity/unwind-tokens-without-dapp.md)
-  * [Backup - Unwind Tokens (without dApp)](user-guides/provide-liquidity/backup-unwind-tokens-without-dapp.md)
 * [OTC trading of Swap Tokens](user-guides/otc-trading-of-swap-tokens.md)
 
 ## FAQ
