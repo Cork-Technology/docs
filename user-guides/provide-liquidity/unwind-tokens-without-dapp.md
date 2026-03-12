@@ -2,7 +2,7 @@
 description: >-
   How to Withdraw Collateral Assets early using an atomic EIP-5792 capable
   wallet
-hidden: true
+hidden: false
 ---
 
 # Unwind Tokens (without dApp)

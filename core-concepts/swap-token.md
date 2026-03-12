@@ -1,3 +1,7 @@
+---
+description: Cork Swap Token (cST) — the tokenized risk instrument for pricing, hedging, and trading onchain risk
+---
+
 # Swap Token
 
 {% hint style="info" %}
@@ -6,7 +10,7 @@
 
 ### Introduction
 
-Many assets in DeFi carry specific forms of risks, such as duration/illiquidity risk, credit risk or depeg risks. These risks affect numerous market participants and asset types, including institutional users, vaults and asset issuers. The Cork Swap Token is a DeFi primitive that allows you to price, hedge, and trade such risks.
+Many assets in DeFi carry specific forms of risk — duration, illiquidity, credit, and price deviation risks. These risks affect numerous market participants and asset types, including institutional users, vaults, and asset issuers. The Cork Swap Token is a DeFi primitive that allows you to price, hedge, and trade such risks.
 
 
 
@@ -38,6 +42,6 @@ Swap Tokens can provide coverage for a wide range of risks and use cases includi
 
 * **Looping**: Swap Tokens can be used in looping trades to shield against liquidation events and provide instant liquidity in particular to illiquid assets (eg Vault Tokens, RWAs)
 * **Duration Risk:** In addition to RWAs, other market participants including Vaults and Bridges which may face significant duration mismatches in their business, can leverage Cork to gain a more capital efficient liquidity buffer to support smooth functioning in volatile market conditions.
-* **Depeg risk:** Temporary or permanent peg price deviations can be fully hedged with Swap Tokens.
-* **Credit risk**: Instruments with credit risks, such as credit funds or certain stablecoins, can be hedged.
+* **Price deviation risk:** Temporary or permanent loss of value relative to the Collateral Asset can be hedged with Cork Swap Tokens.
+* **Credit risk**: Instruments with credit risk, such as credit funds or certain stablecoins, can be hedged.
 
