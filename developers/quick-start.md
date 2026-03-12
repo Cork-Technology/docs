@@ -4,18 +4,7 @@ description: Query Cork Protocol data and simulate operations in minutes
 
 # Quick Start
 
-This guide gets you from zero to reading Cork Protocol data and simulating operations on a local fork. No tokens or wallet required for the first section.
-
-## Prerequisites
-
-- Node.js 18+
-- A package manager (npm, yarn, or pnpm)
-
-```bash
-npm install viem tsx
-```
-
-The examples below use `npx tsx` to run TypeScript directly.
+This guide gets you from zero to reading Cork Protocol data and simulating a deposit on a local fork.
 
 ## Contract Addresses
 
@@ -27,12 +16,58 @@ Cork Phoenix uses deterministic CREATE2 deployment — all addresses are identic
 | CorkAdapter | `0xCCcCcCCCcccCBaD6F772a511B337d9CCc9570407` |
 | WhitelistManager | `0xcCccCcCccCC6e38a2772Eb42D2f408eeB89cb0eE` |
 
-## Query Cork in 30 Seconds
+## Find an Active Market
 
-Create a file called `query-cork.ts` and paste the following:
+Every Cork Pool is identified by a MarketId. Fetch active markets from the API:
+
+```bash
+curl -s "https://api-phoenix.cork.tech/v1/pools/?chainId=1" | jq '.items[0] | {poolId, poolName, expiry}'
+```
+
+This returns a MarketId you can use in the examples below. You can also browse the full list at the [API interactive docs](https://api-phoenix.cork.tech/docs).
+
+## Query Pool State
+
+{% tabs %}
+{% tab title="Foundry" %}
+
+No setup required beyond [Foundry](https://book.getfoundry.sh/getting-started/installation). Query any pool directly with `cast`:
+
+```bash
+# Set your RPC endpoint and a MarketId from the API
+export RPC_URL="https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+export MARKET_ID="0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a"
+export POOL_MANAGER="0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC"
+
+# Get the swap rate (1 REF = rate/1e18 CA)
+cast call $POOL_MANAGER \
+  "swapRate(bytes32)(uint256)" $MARKET_ID \
+  --rpc-url $RPC_URL
+
+# Get pool balances (collateral, reference)
+cast call $POOL_MANAGER \
+  "assets(bytes32)(uint256,uint256)" $MARKET_ID \
+  --rpc-url $RPC_URL
+
+# Get cPT and cST token addresses
+cast call $POOL_MANAGER \
+  "shares(bytes32)(address,address)" $MARKET_ID \
+  --rpc-url $RPC_URL
+```
+
+{% endtab %}
+{% tab title="TypeScript" %}
+
+Install dependencies:
+
+```bash
+npm install viem
+```
+
+Create `query-cork.ts`:
 
 ```typescript
-import { createPublicClient, http } from 'viem'
+import { createPublicClient, http, type Address } from 'viem'
 import { mainnet } from 'viem/chains'
 
 const client = createPublicClient({
@@ -40,11 +75,10 @@ const client = createPublicClient({
   transport: http(), // uses default public RPC — replace with your own for production
 })
 
-const CORK_POOL_MANAGER = '0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC' as const
+const POOL_MANAGER: Address = '0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC'
 
-// A deployed sUSDe/vbUSDC market
-// To find active markets, query: GET https://api-phoenix.cork.tech/v1/pools/?chainId=1
-const MARKET_ID = '0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a' as const
+// Fetch an active market from the API, or paste a known MarketId
+const MARKET_ID = '0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a' as `0x${string}`
 
 const poolManagerAbi = [
   {
@@ -77,34 +111,32 @@ const poolManagerAbi = [
 ] as const
 
 async function main() {
-  // 1. Read the swap rate — 1 REF = X CA (scaled to 18 decimals)
   const swapRate = await client.readContract({
-    address: CORK_POOL_MANAGER,
+    address: POOL_MANAGER,
     abi: poolManagerAbi,
     functionName: 'swapRate',
     args: [MARKET_ID],
   })
   console.log('Swap rate:', Number(swapRate) / 1e18)
 
-  // 2. Read pool balances (TVL)
+  // Asset balances use the token's native decimals (e.g., 18 for sUSDe, 6 for vbUSDC)
   const [collateral, reference] = await client.readContract({
-    address: CORK_POOL_MANAGER,
+    address: POOL_MANAGER,
     abi: poolManagerAbi,
     functionName: 'assets',
     args: [MARKET_ID],
   })
-  console.log('Collateral (sUSDe):', Number(collateral) / 1e18) // sUSDe has 18 decimals
-  console.log('Reference (vbUSDC):', Number(reference) / 1e6)   // vbUSDC has 6 decimals (native decimals)
+  console.log('Collateral:', collateral)
+  console.log('Reference:', reference)
 
-  // 3. Get the cPT and cST token addresses for this market
   const [principalToken, swapToken] = await client.readContract({
-    address: CORK_POOL_MANAGER,
+    address: POOL_MANAGER,
     abi: poolManagerAbi,
     functionName: 'shares',
     args: [MARKET_ID],
   })
-  console.log('Cork Principal Token (cPT):', principalToken)
-  console.log('Cork Swap Token (cST):', swapToken)
+  console.log('cPT:', principalToken)
+  console.log('cST:', swapToken)
 }
 
 main()
@@ -116,15 +148,116 @@ Run it:
 npx tsx query-cork.ts
 ```
 
-You should see the current swap rate, pool balances, and token addresses for the sUSDe/vbUSDC market.
+{% endtab %}
+{% endtabs %}
 
 {% hint style="info" %}
 When you deposit Collateral Asset into a Cork Pool, you receive two tokens: a **Cork Principal Token (cPT)** representing your principal claim, and a **Cork Swap Token (cST)** representing your swap rights. See [Cork Principal Token](../core-concepts/principal-token.md) and [Cork Swap Token](../core-concepts/swap-token.md) for details.
 {% endhint %}
 
-## Try It Locally
+## Simulate a Deposit
 
-To simulate write operations (deposits, swaps) without using real tokens, fork mainnet locally using [Foundry's Anvil](https://book.getfoundry.sh/getting-started/installation).
+Fork mainnet locally and simulate a deposit without using real tokens.
+
+{% tabs %}
+{% tab title="Foundry" %}
+
+### 1. Start a Local Fork
+
+```bash
+anvil --fork-url $RPC_URL
+```
+
+### 2. Run a Forge Script
+
+Create `script/DepositExample.s.sol`:
+
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.24;
+
+import {Script, console} from "forge-std/Script.sol";
+
+interface IERC20 {
+    function approve(address spender, uint256 amount) external returns (bool);
+    function balanceOf(address account) external view returns (uint256);
+}
+
+interface IPoolManager {
+    function previewDeposit(bytes32 poolId, uint256 collateralAssetsIn) external view returns (uint256);
+    function deposit(bytes32 poolId, uint256 collateralAssetsIn, address receiver) external returns (uint256);
+    function shares(bytes32 poolId) external view returns (address, address);
+    function swapRate(bytes32 poolId) external view returns (uint256);
+}
+
+interface IWhitelistManager {
+    function isWhitelisted(bytes32 poolId, address account) external view returns (bool);
+}
+
+contract DepositExample is Script {
+    address constant POOL_MANAGER = 0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC;
+    address constant WHITELIST_MANAGER = 0xcCccCcCccCC6e38a2772Eb42D2f408eeB89cb0eE;
+
+    // sUSDe (Collateral Asset for the example market)
+    address constant SUSDE = 0x9D39A5DE30e57443BfF2A8307A4256c8797A3497;
+
+    function run() external {
+        // Replace with a MarketId from the API
+        bytes32 marketId = 0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a;
+
+        // Use a test address — Anvil's default account
+        address depositor = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
+
+        // Deal 100 sUSDe to the depositor
+        uint256 depositAmount = 100e18;
+        deal(SUSDE, depositor, depositAmount);
+
+        // Check whitelist status
+        bool whitelisted = IWhitelistManager(WHITELIST_MANAGER).isWhitelisted(marketId, depositor);
+        console.log("Whitelisted:", whitelisted);
+
+        // If not whitelisted, the deposit will revert.
+        // For testing, you can disable the whitelist or add the address via DefaultCorkController.
+        if (!whitelisted) {
+            console.log("Address not whitelisted — skipping deposit");
+            return;
+        }
+
+        // Check swap rate
+        uint256 rate = IPoolManager(POOL_MANAGER).swapRate(marketId);
+        console.log("Swap rate:", rate);
+
+        // Preview deposit
+        uint256 expectedShares = IPoolManager(POOL_MANAGER).previewDeposit(marketId, depositAmount);
+        console.log("Expected cPT + cST:", expectedShares);
+
+        // Execute deposit
+        vm.startBroadcast(depositor);
+        IERC20(SUSDE).approve(POOL_MANAGER, depositAmount);
+        uint256 sharesOut = IPoolManager(POOL_MANAGER).deposit(marketId, depositAmount, depositor);
+        vm.stopBroadcast();
+        console.log("Shares received:", sharesOut);
+
+        // Check cPT and cST balances (both use 18 decimals)
+        (address cpt, address cst) = IPoolManager(POOL_MANAGER).shares(marketId);
+        console.log("cPT balance:", IERC20(cpt).balanceOf(depositor));
+        console.log("cST balance:", IERC20(cst).balanceOf(depositor));
+    }
+}
+```
+
+Run it against your local fork:
+
+```bash
+forge script script/DepositExample.s.sol --fork-url http://127.0.0.1:8545 --broadcast
+```
+
+{% hint style="info" %}
+The `deal` cheatcode sets token balances directly — no need to source tokens from an external account. This avoids dependencies on specific whitelisted addresses or funded accounts.
+{% endhint %}
+
+{% endtab %}
+{% tab title="TypeScript" %}
 
 ### 1. Start a Local Fork
 
@@ -132,11 +265,15 @@ To simulate write operations (deposits, swaps) without using real tokens, fork m
 anvil --fork-url $YOUR_RPC_URL
 ```
 
-Replace `$YOUR_RPC_URL` with your Alchemy, Infura, or other Ethereum mainnet RPC endpoint. Anvil starts a local chain at `http://127.0.0.1:8545` forked from the latest mainnet state.
+### 2. Run the Deposit Script
 
-### 2. Simulate a Deposit
+Install dependencies:
 
-Create a file called `deposit-fork.ts`:
+```bash
+npm install viem tsx
+```
+
+Create `deposit-fork.ts`:
 
 ```typescript
 import {
@@ -145,33 +282,31 @@ import {
   http,
   parseUnits,
   encodeFunctionData,
+  type Address,
+  type Hex,
 } from 'viem'
 import { foundry } from 'viem/chains'
 
-// Point at the local Anvil fork
 const transport = http('http://127.0.0.1:8545')
 const publicClient = createPublicClient({ chain: foundry, transport })
 const walletClient = createWalletClient({ chain: foundry, transport })
 
-// Contracts
-const CORK_POOL_MANAGER = '0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC' as const
-const CORK_ADAPTER = '0xCCcCcCCCcccCBaD6F772a511B337d9CCc9570407' as const
-const SUSDE = '0x9D39A5DE30e57443BfF2A8307A4256c8797A3497' as const
+const POOL_MANAGER: Address = '0xccCCcCcCCccCfAE2Ee43F0E727A8c2969d74B9eC'
+const WHITELIST_MANAGER: Address = '0xcCccCcCccCC6e38a2772Eb42D2f408eeB89cb0eE'
+const SUSDE: Address = '0x9D39A5DE30e57443BfF2A8307A4256c8797A3497'
 
-const MARKET_ID = '0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a' as const
+// Fetch an active MarketId from the API, or paste one here
+const MARKET_ID: Hex = '0xab4988fb673606b689a98dc06bdb3799c88a1300b6811421cd710aa8f86b702a'
 
-// A whitelisted address on this market
-const WHITELISTED_ACCOUNT = '0x49903609b8a22e1d9f7406d1306191e28c8ececd' as const
+// Use Anvil's default funded account
+const DEPOSITOR: Address = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
 
 const erc20Abi = [
   {
     name: 'approve',
     type: 'function',
     stateMutability: 'nonpayable',
-    inputs: [
-      { name: 'spender', type: 'address' },
-      { name: 'amount', type: 'uint256' },
-    ],
+    inputs: [{ name: 'spender', type: 'address' }, { name: 'amount', type: 'uint256' }],
     outputs: [{ type: 'bool' }],
   },
   {
@@ -189,19 +324,13 @@ const poolManagerAbi = [
     type: 'function',
     stateMutability: 'view',
     inputs: [{ name: 'poolId', type: 'bytes32' }],
-    outputs: [
-      { name: 'principalToken', type: 'address' },
-      { name: 'swapToken', type: 'address' },
-    ],
+    outputs: [{ name: 'principalToken', type: 'address' }, { name: 'swapToken', type: 'address' }],
   },
   {
     name: 'previewDeposit',
     type: 'function',
     stateMutability: 'view',
-    inputs: [
-      { name: 'poolId', type: 'bytes32' },
-      { name: 'collateralAssetsIn', type: 'uint256' },
-    ],
+    inputs: [{ name: 'poolId', type: 'bytes32' }, { name: 'collateralAssetsIn', type: 'uint256' }],
     outputs: [{ name: 'cptAndCstSharesOut', type: 'uint256' }],
   },
   {
@@ -217,67 +346,75 @@ const poolManagerAbi = [
   },
 ] as const
 
+const whitelistAbi = [
+  {
+    name: 'isWhitelisted',
+    type: 'function',
+    stateMutability: 'view',
+    inputs: [{ name: 'poolId', type: 'bytes32' }, { name: 'account', type: 'address' }],
+    outputs: [{ type: 'bool' }],
+  },
+] as const
+
 async function main() {
-  const depositAmount = parseUnits('1', 18) // 1 sUSDe
+  const depositAmount = parseUnits('100', 18) // 100 sUSDe
 
-  // Impersonate the whitelisted account
+  // Deal tokens to the depositor using Anvil's cheatcode
   await publicClient.request({
-    method: 'anvil_impersonateAccount' as any,
-    params: [WHITELISTED_ACCOUNT],
+    method: 'anvil_impersonateAccount' as 'eth_chainId',
+    params: [DEPOSITOR],
   })
 
-  // Check sUSDe balance
-  const balance = await publicClient.readContract({
-    address: SUSDE,
-    abi: erc20Abi,
-    functionName: 'balanceOf',
-    args: [WHITELISTED_ACCOUNT],
+  // Check whitelist
+  const isWhitelisted = await publicClient.readContract({
+    address: WHITELIST_MANAGER,
+    abi: whitelistAbi,
+    functionName: 'isWhitelisted',
+    args: [MARKET_ID, DEPOSITOR],
   })
-  console.log('sUSDe balance:', Number(balance) / 1e18)
+  console.log('Whitelisted:', isWhitelisted)
 
-  // If balance is 0, use anvil_setBalance to give the account ETH
-  // and deal tokens (or pick a different whitelisted address with funds)
-  if (balance === 0n) {
-    console.log('No sUSDe balance. Use `anvil_setStorageAt` to deal tokens, or pick a funded whitelisted address.')
+  if (!isWhitelisted) {
+    console.log('Address not whitelisted — deposit would revert')
     return
   }
 
-  // 1. Preview the deposit to see expected shares
+  // Preview
   const expectedShares = await publicClient.readContract({
-    address: CORK_POOL_MANAGER,
+    address: POOL_MANAGER,
     abi: poolManagerAbi,
     functionName: 'previewDeposit',
     args: [MARKET_ID, depositAmount],
   })
-  console.log('Expected cPT + cST shares:', Number(expectedShares) / 1e18)
+  // cPT and cST always use 18 decimals, regardless of the underlying token's decimals
+  console.log('Expected cPT + cST:', Number(expectedShares) / 1e18)
 
-  // 2. Approve CorkPoolManager to spend sUSDe
+  // Approve
   await walletClient.sendTransaction({
-    account: WHITELISTED_ACCOUNT,
+    account: DEPOSITOR,
     to: SUSDE,
     data: encodeFunctionData({
       abi: erc20Abi,
       functionName: 'approve',
-      args: [CORK_POOL_MANAGER, depositAmount],
+      args: [POOL_MANAGER, depositAmount],
     }),
   })
-  console.log('Approved CorkPoolManager to spend sUSDe')
 
-  // 3. Deposit
+  // Deposit
   const txHash = await walletClient.sendTransaction({
-    account: WHITELISTED_ACCOUNT,
-    to: CORK_POOL_MANAGER,
+    account: DEPOSITOR,
+    to: POOL_MANAGER,
     data: encodeFunctionData({
       abi: poolManagerAbi,
       functionName: 'deposit',
-      args: [MARKET_ID, depositAmount, WHITELISTED_ACCOUNT],
+      args: [MARKET_ID, depositAmount, DEPOSITOR],
     }),
   })
   console.log('Deposit tx:', txHash)
 
-  // 4. Check cPT and cST balances
+  // Check balances
   const [cptAddress, cstAddress] = await publicClient.readContract({
-    address: CORK_POOL_MANAGER,
+    address: POOL_MANAGER,
     abi: poolManagerAbi,
     functionName: 'shares',
     args: [MARKET_ID],
@@ -287,17 +424,15 @@ async function main() {
     address: cptAddress,
     abi: erc20Abi,
     functionName: 'balanceOf',
-    args: [WHITELISTED_ACCOUNT],
+    args: [DEPOSITOR],
   })
-
   const cstBalance = await publicClient.readContract({
     address: cstAddress,
     abi: erc20Abi,
     functionName: 'balanceOf',
-    args: [WHITELISTED_ACCOUNT],
+    args: [DEPOSITOR],
   })
 
-  // cPT and cST always use 18 decimals, regardless of the underlying token's decimals
   console.log('cPT balance:', Number(cptBalance) / 1e18)
   console.log('cST balance:', Number(cstBalance) / 1e18)
 }
@@ -311,13 +446,37 @@ Run it:
 npx tsx deposit-fork.ts
 ```
 
+{% endtab %}
+{% endtabs %}
+
 {% hint style="warning" %}
-**Whitelist:** Some Cork markets require addresses to be whitelisted before depositing. Check with `isWhitelisted(marketId, address)` on WhitelistManager (`0xcCccCcCccCC6e38a2772Eb42D2f408eeB89cb0eE`) before attempting a deposit.
+**Whitelist:** Some Cork markets require addresses to be whitelisted before depositing. The examples above check whitelist status before attempting a deposit. For testing on a fork, you can disable the whitelist by impersonating the DefaultCorkController admin.
 {% endhint %}
 
 {% hint style="warning" %}
-**Use CorkAdapter for production.** The example above calls CorkPoolManager directly for simplicity. In production, use [CorkAdapter](contract-reference/cork-adapter.md) — it wraps the same operations with slippage protection and deadline checks.
+**Use CorkAdapter for production.** The examples above call CorkPoolManager directly for simplicity. In production, use [CorkAdapter](contract-reference/cork-adapter.md) — it wraps the same operations with slippage protection and deadline checks.
 {% endhint %}
+
+## Production Integration
+
+**Solidity integrators:** Add Cork as a Foundry dependency:
+
+```bash
+forge install cork-technology/phoenix
+```
+
+Then import interfaces directly:
+
+```solidity
+import {IPoolManager, MarketId, Market} from "contracts/interfaces/IPoolManager.sol";
+import {ICorkAdapter} from "contracts/interfaces/ICorkAdapter.sol";
+```
+
+**TypeScript integrators:** Use [viem](https://viem.sh) with the ABI snippets shown above, or install the published package:
+
+```bash
+npm install @cork-technology/phoenix
+```
 
 ## Key Gotchas
 
