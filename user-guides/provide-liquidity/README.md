@@ -15,9 +15,9 @@ Liquidity providers deposit Collateral Asset into a Cork Pool to mint [Cork Prin
 
 | Action | What It Does | When To Use |
 |---|---|---|
-| **Mint** (Deposit) | Deposit CA → receive cPT + cST | Enter a new position |
-| **Unwind** (Unwind Deposit) | Return cPT + cST → receive CA | Exit a position before expiry |
-| **Redeem** (Withdraw) | Return cPT → receive CA + REF | Claim assets after expiry |
+| **Deposit** | Deposit CA → receive cPT + cST | Enter a new position |
+| **Unwind Deposit** | Return cPT + cST → receive CA | Exit a position before expiry |
+| **Redeem** | Return cPT → receive CA + REF | Claim assets after expiry |
 
 ## Guides
 

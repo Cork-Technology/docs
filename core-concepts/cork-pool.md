@@ -64,7 +64,7 @@ Cork Swap Tokens change the liquidity risk profile for larger investors since wi
 
 If the Reference Asset loses value relative to the Collateral Asset, holders of the Cork Swap Token can profit by exercising and receiving the Collateral Asset from the Cork Pool. The value of the Cork Swap Token is therefore related to the CA:REF relative price and implied risk of the Reference Asset. The Cork Swap Token becomes a market to price the risk of the Reference Asset.
 
-For example in an LRT-ETH pair, if the Reference Asset falls to 0.8 ETH, the Cork Swap Token will then be worth at least 0.2 ETH. If an investor bought the Cork Swap Token for 0.01 ETH, they realize significant upside from the price deviation. This illustrates the leveraged exposure inherent in the Cork Swap Token.
+For example in an LRT-ETH pair, if the Reference Asset falls to 0.8 ETH, the Cork Swap Token will then be worth at least 0.2 ETH. If an investor bought the Cork Swap Token for 0.01 ETH, the position is now worth 0.2 ETH — a 20x return on the cST. This illustrates the leveraged exposure inherent in the Cork Swap Token: limited downside (the premium paid) with asymmetric upside when the Reference Asset loses value.
 
 #### **Repurchase Mechanism**
 

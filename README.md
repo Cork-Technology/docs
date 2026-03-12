@@ -1,7 +1,7 @@
 # What is Cork?
 
 **TL;DR**\
-Cork is a programmable risk layer for onchain assets such as vault tokens, yield-bearing stablecoins, and liquid (re)staking tokens. Cork's core primitive enables asset managers and issuers to spin up custom swap markets that enhance redemption liquidity, risk transparency, and market confidence for their onchain assets. Backed by a16z crypto, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial, Cork is building the risk infrastructure needed to bring institutional capital into onchain credit markets.
+Cork is a programmable risk layer for onchain assets such as vault tokens, yield-bearing stablecoins, and liquid (re)staking tokens. Cork's core primitive enables asset managers and issuers to spin up custom swap markets that enhance redemption liquidity, risk transparency, and market confidence for their onchain assets. Backed by a16z CSX, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial, Cork is building the risk infrastructure needed to bring institutional capital into onchain credit markets.
 
 ***
 
@@ -44,7 +44,7 @@ See [Target Assets & Use Cases](core-concepts/target-assets-and-use-cases.md) fo
 
 ## Why Tokenized Risk?
 
-As onchain adoption accelerates and institutional capital enters the space, risk infrastructure is emerging as a foundational requirement. The stablecoin market has more than doubled since early 2024 (from $130B to over $300B), while tokenized real-world assets have surged from $1B in 2021 to $35B today. In 2025, tokenization entered mainstream finance with Nasdaq approving trading of tokenized stocks and ETFs.
+As onchain adoption accelerates and institutional capital enters the space, risk infrastructure is emerging as a foundational requirement. As of early 2026, the stablecoin market has more than doubled since early 2024 (from $130B to over $300B), while tokenized real-world assets have surged from $1B in 2021 to $35B (source: RWA.xyz). In 2025, tokenization entered mainstream finance with Nasdaq approving trading of tokenized stocks and ETFs.
 
 Yet robust tools for identifying, pricing, and transferring risk onchain remain underdeveloped. Events like the Terra–Luna failure ($40B+ vaporized, triggering contagion across major institutions) and the October 2025 liquidation event (when multiple pegged assets traded below parity on centralized venues) demonstrated that risk management cannot be an afterthought.
 

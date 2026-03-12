@@ -64,11 +64,11 @@ If there is an impairment of either the Reference Asset or the Collateral Asset,
 
 #### What does "Unwind" mean?
 
-Unwind means reversing a prior operation before expiry. **Unwind Deposit** returns cPT + cST to recover the original Collateral Asset. **Repurchase** (Unwind Exercise) returns CA to recover REF + cST from the pool. Unwinding lets you exit a position without waiting for expiry.
+Unwind means reversing a prior operation **before expiry**. **Unwind Deposit** returns cPT + cST to recover the original Collateral Asset. **Repurchase** (Unwind Exercise) returns CA to recover REF + cST from the pool. These operations are only available before the pool expires — after expiry, the only exit is Redeem.
 
 #### What operations can I do before vs after expiry?
 
-**Before expiry:** Deposit, Unwind Deposit, Exercise, Repurchase, Withdraw. **After expiry:** Redeem only. See the [Operations Table](../developers/contract-reference/cork-pool-manager.md#operations-table) for a complete reference.
+**Before expiry:** Deposit, Unwind Deposit, Exercise, Repurchase, Withdraw (exit cPT for proportional CA + REF). **After expiry:** Redeem only (same proportional exit, but uses the `redeem` contract function). In user-facing terms, both let cPT holders claim their share — the contract distinguishes them based on whether the pool has expired. See the [Operations Table](../developers/contract-reference/cork-pool-manager.md#operations-table) for a complete reference.
 
 #### How do fees work?
 

@@ -4,7 +4,7 @@ description: How fees work in Cork Pools — types, calculation, and configurati
 
 # Fees
 
-Cork Pools charge fees on two operations: **Exercise** and **Repurchase**. All fees flow to the Cork fee treasury. In some market configurations, fees may be partially or fully redirected to Cork Principal Token (cPT) holders to adjust underwriting economics.
+Cork Pools charge fees on two operations: **Exercise** and **Repurchase**. By default, fees flow to the Cork fee treasury. Governance can configure specific markets to redirect fees (partially or fully) to Cork Principal Token (cPT) holders to adjust underwriting economics.
 
 ---
 
@@ -21,7 +21,7 @@ Fees are **not** charged on Deposit, Unwind Deposit, Withdraw, or Redeem operati
 
 ## How Fees Are Calculated
 
-Fees use **18-decimal precision** where `1e18 = 1%`. The fee is applied to the Collateral Asset amount involved in the operation:
+Fees use a **custom encoding** where `1e18 = 1%` (one percentage point). This differs from standard 18-decimal fixed-point where `1e18` would represent 100%. The fee is applied to the Collateral Asset amount involved in the operation:
 
 ```
 feeAmount = amount × feePercentage / 100e18
@@ -49,17 +49,17 @@ The maximum allowed fee for either type is `5e18` (**5%**). Fees are configured 
 
 ## Querying Fees
 
-Read the current fee for any pool on CorkPoolManager:
+Read the current fee for any pool on CorkPoolManager. The `MarketId` type is a `bytes32` hash that uniquely identifies a pool — see [MarketId Computation](../developers/contract-reference/cork-pool-manager.md#marketid-computation) for details.
 
 ```solidity
 function swapFee(MarketId poolId) external view returns (uint256 fees)
 function unwindSwapFee(MarketId poolId) external view returns (uint256 fees)
 ```
 
-The returned value uses 18-decimal precision (`1e18 = 1%`).
+The returned value uses Cork's fee encoding (`1e18 = 1%`).
 
 {% hint style="info" %}
-The API returns fees as decimal fractions (e.g., `0.01` = 1%). On-chain, the same fee is represented as `1e18`. See [API Reference](../developers/api-reference.md) for details.
+The API returns fees as decimal fractions (e.g., `0.01` = 1%). On-chain, the same 1% fee is represented as `1e18` (1000000000000000000). See [API Reference](../developers/api-reference.md) for details.
 {% endhint %}
 
 ---

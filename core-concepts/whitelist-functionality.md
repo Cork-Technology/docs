@@ -13,7 +13,7 @@ Cork Pools can optionally restrict access through a whitelist. When enabled, onl
 Each Cork Pool can be configured with whitelist enforcement at creation. When enabled:
 
 - **Only whitelisted addresses can Deposit** into the pool
-- All other operations (Exercise, Withdraw, Redeem, Unwind) remain available to any address holding the required tokens
+- All other operations (Exercise, Withdraw, Redeem, Unwind) are currently available to any address holding the required tokens
 - An address is considered whitelisted if it is on the **global whitelist** OR the **market-specific whitelist**
 
 {% hint style="info" %}
