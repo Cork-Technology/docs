@@ -1,3 +1,7 @@
+---
+description: The core primitive — how Cork Pools work, the dual token system, exercise and repurchase mechanics
+---
+
 # Cork Pool
 
 The foundational component of Cork Protocol is the `Cork Pool`, which is the mechanism around which our markets are built. It works as follows.
@@ -50,7 +54,7 @@ In the case the Collateral Asset is accruing yield in excess of the Reference As
 
 ## Exercise Swap Mechanism
 
-A user can exercise their Cork Swap Token by depositing 1 Reference Asset + 1 Cork Swap Token to receive 1 Collateral Asset from the Cork Pool (minus a small exercise fee). This means holding a Cork Swap Token enables you to redeem the Collateral Asset at a 1:1 relationship with the Reference Asset.
+A user can exercise their Cork Swap Token by depositing 1 Reference Asset + 1 Cork Swap Token to receive 1 Collateral Asset from the Cork Pool (minus an exercise fee). This means holding a Cork Swap Token enables you to redeem the Collateral Asset at a 1:1 relationship with the Reference Asset.
 
 <figure><img src="../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -58,9 +62,9 @@ In the presence of a Cork Swap Token the Reference Asset inherits the liquidity 
 
 Cork Swap Tokens change the liquidity risk profile for larger investors since with the available liquidity on many Reference Assets it is difficult to immediately liquidate big positions. For such users, the immediate liquidity guarantee from Cork Swap Tokens is another use case and form of utility for the token beyond the hedge. This is particularly useful to manage duration mismatch risks, which is a common challenge for vaults.
 
-If the Reference Asset depegs from the Collateral Asset, the holders of the Cork Swap Token can profit by redeeming the Collateral Asset from the Cork Pool. The value of the Cork Swap Token will therefore be related to the Collateral Asset:Reference Asset relative price and implied risk of the Reference Asset. The Cork Swap Token becomes a market to price the risk of a Reference Asset depeg.
+If the Reference Asset loses value relative to the Collateral Asset, holders of the Cork Swap Token can profit by exercising and receiving the Collateral Asset from the Cork Pool. The value of the Cork Swap Token is therefore related to the CA:REF relative price and implied risk of the Reference Asset. The Cork Swap Token becomes a market to price the risk of the Reference Asset.
 
-For example in an LRT-ETH pair, if the Reference Asset would depeg such that it is worth 0.8Eth, the Cork Swap Token will then be worth at least 0.2Eth. If an investor bought the Cork Swap Token for 0.01Eth, they 20x their investment from the depeg event. This is an example of the leveraged upside inherent in the Cork Swap Token token, similar to how investors betting on Credit Default Swap make significant upside if there is loan defaults (eg like Michael Burry famously did in 2008).
+For example in an LRT-ETH pair, if the Reference Asset falls to 0.8 ETH, the Cork Swap Token will then be worth at least 0.2 ETH. If an investor bought the Cork Swap Token for 0.01 ETH, the position is now worth 0.2 ETH — a 20x return on the cST. This illustrates the leveraged exposure inherent in the Cork Swap Token: limited downside (the premium paid) with asymmetric upside when the Reference Asset loses value.
 
 #### **Repurchase Mechanism**
 
@@ -76,4 +80,4 @@ There are two scenarios where one would do this. If the price of Cork Principal 
 
 When swaps are exercised, some Collateral Asset is replaced by Cork Swap Token + Reference Asset. In a scenario where the Reference Asset returns to its usual liquidity profile, the Cork Pool will be restored to holding just Collateral Asset through the Repurchase Mechanism. If that does not happen, the Reference Asset is held in the Cork Pool to be redeemed at expiry by Cork Principal Token holders.
 
-Take a scenario where the Reference Asset temporarily depegs, the system would generate meaningful profit. To explain this, take the example of a LRT:Eth pair. Prior to the depeg, the pair trades 1:1 with the Cork Swap Token being priced at 0.02 Eth. A depeg occurs and the LRT is trading at 0.9 Eth. In this instance the Cork Swap Token might be trading at 0.13 Eth as the market anticipates a further depeg. At this point spending 1 Eth to repurchase and then sell the Cork Swap Token+LRT (even with a fee of up to 3%) is profitable. Any time there is a temporary depeg and repeg there is likely a profit to be made by repurchasing the Reference Asset + Cork Swap Token in the Cork Pool.
+Take a scenario where the Reference Asset temporarily loses value relative to the Collateral Asset — the Repurchase mechanism can generate profit. For example, in an LRT:ETH pair trading 1:1, with cST priced at 0.02 ETH: if the LRT falls to 0.9 ETH, the cST might trade at 0.13 ETH as the market prices in further risk. At this point, spending 1 ETH to repurchase REF + cST from the pool (even with a fee) is profitable because the combined value of REF + cST exceeds 1 ETH. Any time there is a temporary price deviation and recovery, there is likely a profit to be made through the Repurchase mechanism.
