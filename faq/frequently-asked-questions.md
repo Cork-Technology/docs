@@ -1,54 +1,103 @@
+---
+description: Common questions about Cork Protocol — how it works, key mechanics, and getting started
+---
+
 # Frequently Asked Questions
 
-#### What is duration risk and how does Cork solve for it?
+## Protocol Mechanics
 
-Certain assets, such as vault shares or Real World Assets (RWAs) often have limited secondary liquidity and primarily are liquid through a redemption mechanism. However, when such assets have a long time-delay between when you request a redemption and a payout is complete, you as a user are faced with what is called duration risk. Duration has a big impact on the ability for these assets to be used in DeFi, as generally DeFi is not designed to handle duration risk (yet). Cork provides the ability to create Swap Tokens which enable the direct exchange of a vault share or RWA for a liquid collateral asset, thereby allowing users to pay for coverage against duration risk. This can enable long duration assets to be used across DeFi for example in lending markets.
+#### What is a Cork Pool?
 
-#### What is a Depeg Event?
+A Cork Pool is the core primitive of Cork Protocol. It pairs a Collateral Asset with a Reference Asset and issues two tokens on deposit: Cork Principal Token and Cork Swap Token. See [Cork Pool](../core-concepts/cork-pool.md) for the full explanation.
 
-A depeg event occurs when a pegged asset, like a stablecoin or liquid staking token, deviates from its intended value due to market volatility, liquidity issues, or external shocks. Some depegs are temporary (e.g., USDC during the SVB collapse), while others are permanent (e.g., UST).
+#### What is the difference between a Cork Principal Token and a Cork Swap Token?
 
-### Why are you building Cork?
+**Cork Principal Token** represents your principal claim on the pool. At expiry, you redeem Cork Principal Tokens for your proportional share of pool assets. **Cork Swap Token** gives you the right to exercise — exchange Reference Asset + Cork Swap Token for Collateral Asset before expiry. They are complementary: Cork Principal Tokens are for underwriters earning yield, Cork Swap Tokens are for those seeking coverage.
 
-For DeFi to become the backbone of finance, trusted by large scale institutions, it needs risk management infrastructure. We are building Cork to enable the creation of risk markets to help accelerate the adoption of DeFi.
+#### Why do Cork Principal Tokens and Cork Swap Tokens use 18 decimals regardless of the underlying token?
 
-### Who is the team behind Cork?
+All Cork pool share tokens are standardized to 18 decimals for consistency. Even if the Collateral Asset uses different decimals (e.g., USDC with 6), the protocol normalizes internally. This simplifies integration and prevents decimal-mismatch errors.
 
-Cork Protocol has been built by Cork Protocol Inc., a Delaware company, and is operated by Cork Labs, a Cayman Islands company. Cork is founded by three serial entrepreneurs, who all have built out DeFi projects in the past. Cork is backed by a16z CSX, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial
+#### What determines the price of a Cork Swap Token or Cork Principal Token?
 
-To learn more about our team, visit our website:\
-[https://www.cork.tech/about/](https://www.cork.tech/about/)
+Current Cork markets trade through OTC limit orders, where pricing is set between two counterparties and executed onchain. The prices of Cork Swap Tokens and Cork Principal Tokens are inversely related — both add up to 1 Collateral Asset. If the premium (Cork Swap Token price) increases, the Cork Principal Token price decreases proportionally.
 
-### Who would use Cork?&#x20;
+#### What is the Exchange Rate?
 
-Cork is primarily designed for institutional and protocol users.&#x20;
+The Exchange Rate determines how many Reference Assets correspond to each Cork Swap Token when exercising. It accounts for yield differentials between the Collateral Asset and Reference Asset. For yield-bearing pairs (e.g., wstETH/ETH), the rate adjusts continuously to prevent yield from being arbitraged out of the pool at the expense of Cork Principal Token holders.
 
-### What determines the price of a Swap Token or Principal Token?
+#### What is the Premium?
 
-The current Cork markets are all trading through OTC limit orders, where the pricing is set between two counterparties separately and executed onchain. The price of a Swap Token and Principal Token are always inversely related, with both adding up to 1 Collateral Asset. So if the premium increases, the price of the Swap Token increases and Principal Token decreases.
+The premium is the annualized cost that Cork Swap Token holders pay to Cork Principal Token holders for coverage. For example, a 4% annual premium on a 3-month expiry would cost approximately 0.01 Collateral Asset per Cork Swap Token (4% / 4 quarters).
 
-### What happens if the Collateral Asset is impaired?
+#### What happens when a Cork Swap Token expires?
 
-Underwriters and to some extent Swap Token holders are exposed to the performance of the collateral asset. If it is impaired, the underwriter may face a loss when they receive back their now impaired Collateral Assets. The Swap Token holder will now only be able to swap out to an impaired asset, which might not be as vaulable which may reduce the value of the Swap Token.
+At expiry, the Cork Swap Token can no longer be exercised and has no further value. The Cork Principal Token can be used to redeem the remaining assets in the Cork Pool via the Redeem operation.
 
-### What are the risks of holding a Principal Tokens?
+#### What is a MarketId?
 
-If there is an impairment of either the Reference Asset or the Collateral Asset, the underwriter holding Principal Tokens bears the loss.&#x20;
+A MarketId is the `keccak256` hash of all 8 fields in the Market struct. It uniquely identifies a Cork Pool. The same Market parameters always produce the same MarketId on any chain. See [CorkPoolManager](../developers/contract-reference/cork-pool-manager.md#marketid-computation) for computation details.
 
-### What happens if when a Swap Token expires?
+---
 
-At expiry, the Swap Token can no longer be exercised and has no further value. The Principal Token can at expiry be used to redeem the collateral in the Cork Pool
+## Risk & Coverage
 
-### What is the Premium?
+#### What is a price deviation event?
 
-The premium is the annualized cost which Swap Token holders pay to Principal Token holders for their coverage. For example a 4% premium for a 3 month expiry would cost 0.04/4 = 0.01 (Collateral Asset).
+A price deviation event occurs when a pegged asset — such as a stablecoin or liquid staking token — trades below its intended value due to market volatility, liquidity issues, or external shocks. Some deviations are temporary (e.g., USDC during the SVB collapse), while others are permanent (e.g., UST). Cork Swap Tokens allow holders to hedge against such events by guaranteeing exchange of the Reference Asset for the Collateral Asset regardless of market conditions.
 
-### Where can I see my positions?
+#### What is duration risk and how does Cork address it?
 
-On the Cork dapp, connect your wallet and go to the Dashboard section. There you can see all your positions.
+Certain assets — vault shares, RWAs, bridge tokens — have limited secondary liquidity and primarily rely on redemption mechanisms with long delays (sometimes 40+ days). This exposes holders to duration risk: the gap between when you request a redemption and when you receive your assets. Cork Pools address this by enabling holders to acquire Cork Swap Tokens, which provide instant exchange of the Reference Asset for a liquid Collateral Asset, bypassing the redemption queue entirely.
 
-### Where is Cork Protocol deployed?
+#### What happens if the Reference Asset loses value relative to the Collateral Asset?
 
-Cork is live on Ethereum Mainnet and the Sepolia Testnet.
+If the Reference Asset loses value relative to the Collateral Asset, Cork Swap Token holders can exercise their tokens to exchange Reference Asset for Collateral Asset at favorable terms. The Cork Swap Token becomes more valuable as the gap widens. Cork Principal Token holders bear this risk — at expiry, they receive a proportional share of pool assets, which may now include the impaired Reference Asset.
 
-<br>
+#### What happens if the Collateral Asset is impaired?
+
+Both Cork Principal Token holders and (to some extent) Cork Swap Token holders are exposed to the performance of the Collateral Asset. If the Collateral Asset is impaired, Cork Principal Token holders may face a loss when they redeem. Cork Swap Token holders can still exercise, but they receive an impaired asset, which reduces the effective value of the coverage.
+
+#### What are the risks of holding Cork Principal Tokens?
+
+If there is an impairment of either the Reference Asset or the Collateral Asset, the Cork Principal Token holder bears the loss. If swaps are exercised, the pool's composition shifts from Collateral Asset toward Reference Asset — meaning at expiry, Cork Principal Token holders receive a mix of Collateral Asset and Reference Asset rather than pure Collateral Asset.
+
+---
+
+## Operations
+
+#### What does "Unwind" mean?
+
+Unwind means reversing a prior operation **before expiry**. **Unwind Deposit** returns Cork Principal Token + Cork Swap Token to recover the original Collateral Asset. **Repurchase** (Unwind Exercise) returns Collateral Asset to recover Reference Asset + Cork Swap Token from the pool. These operations are only available before the pool expires — after expiry, the only exit is Redeem.
+
+#### What operations can I do before vs after expiry?
+
+**Before expiry:** Deposit, Unwind Deposit, Exercise, Repurchase, Withdraw (exit Cork Principal Tokens for proportional Collateral Asset + Reference Asset). **After expiry:** Redeem only (same proportional exit, but uses the `redeem` contract function). In user-facing terms, both let Cork Principal Token holders claim their share — the contract distinguishes them based on whether the pool has expired. See the [Operations Table](../developers/contract-reference/cork-pool-manager.md#operations-table) for a complete reference.
+
+#### How do fees work?
+
+Fees are charged on Exercise and Repurchase operations only. They use 18-decimal precision (`1e18 = 1%`) with a maximum of 5%. Fees are configured per pool by governance. See [Fees](../core-concepts/fees.md) for calculation details and examples.
+
+---
+
+## About Cork
+
+#### Why are you building Cork?
+
+For DeFi to become the backbone of finance, trusted by large-scale institutions, it needs risk management infrastructure. We are building Cork to enable the creation of risk markets to help accelerate the adoption of DeFi.
+
+#### Who is the team behind Cork?
+
+Cork Protocol is built by Cork Protocol Inc. (Delaware) and operated by Cork Labs (Cayman Islands). The founding team are serial entrepreneurs with prior DeFi experience. Cork is backed by a16z CSX, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial. Learn more at [cork.tech/about](https://www.cork.tech/about/).
+
+#### Who would use Cork?
+
+Cork is primarily designed for institutional and protocol users — asset managers, vault curators, lending protocols, and risk managers who need programmable risk infrastructure for their onchain assets.
+
+#### Where is Cork Protocol deployed?
+
+Cork is live on Ethereum mainnet and Sepolia testnet. All contracts use deterministic CREATE2 deployment, so addresses are identical across chains. See [Phoenix Deployments](../smart-contracts/phoenix-deployments.md) for the full address list.
+
+#### Where can I see my positions?
+
+On the Cork dApp at [app.cork.tech](https://app.cork.tech), connect your wallet and go to the Dashboard section.

@@ -43,7 +43,7 @@ Cork Pools can be configured for a wide range of Reference Assets:
 
 **Liquid Staking & Restaking Tokens** — Tokens like wstETH, ezETH, or other LST/LRT derivatives that track an underlying staked asset. While generally correlated to the base asset, they can deviate during periods of market stress or slashing events.
 
-**Stablecoins** — Fiat-pegged tokens (USDC, USDT, DAI) or algorithmic stablecoins where depeg risk exists. Cork Pools allow holders to hedge against temporary or permanent loss of peg.
+**Stablecoins** — Fiat-pegged tokens (USDC, USDT, DAI) or algorithmic stablecoins where price deviation risk exists. Cork Pools allow holders to hedge against temporary or permanent loss of value relative to the peg.
 
 **Real-World Assets (RWAs)** — Tokenized bonds, credit funds, or other traditional financial instruments brought onchain. These often carry duration risk (long redemption windows of 40+ days), making them difficult to use as collateral in DeFi without a liquidity facility like Cork.
 

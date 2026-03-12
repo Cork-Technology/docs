@@ -1,3 +1,7 @@
+---
+description: Cork Principal Token (cPT) — underwriting exposure with yield from premiums and Collateral Asset accrual
+---
+
 # Principal Token
 
 {% hint style="info" %}
