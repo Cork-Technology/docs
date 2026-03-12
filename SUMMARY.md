@@ -46,6 +46,7 @@
   * [CorkPoolManager](developers/contract-reference/cork-pool-manager.md)
   * [Admin & Governance](developers/contract-reference/admin-and-governance.md)
 * [API Reference](developers/api-reference.md)
+* [AI Context](developers/ai-context.md)
 
 ## External links
 
