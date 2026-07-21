@@ -18,7 +18,7 @@ Cork Phoenix has undergone independent security audits by two firms. All identif
 
 * **Scope:** Full protocol audit and formal verification of [Cork Phoenix v1.1.0](https://github.com/Cork-Technology/phoenix/releases/tag/v1.1.0)
 * **Date:** January 2026
-* [**View Report (PDF)**](https://drive.google.com/file/d/1TPizkmb0EVETjoONSjxe6TAAKVpeAKyH/view)
+* [**View Report (PDF)**](https://drive.google.com/file/d/1E7sFG41nPR8QFJpT_LK8sqeLsfPUVPtb/view)
 
 {% hint style="info" %}
 The Certora engagement included formal verification — a mathematical method that proves specific protocol properties hold under all possible inputs. The report covers 11 verified properties including accounting consistency, token backing, front-run resilience, and fee enforcement.
