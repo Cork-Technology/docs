@@ -88,7 +88,7 @@ For DeFi to become the backbone of finance, trusted by large-scale institutions,
 
 #### Who is the team behind Cork?
 
-Cork Protocol is built by Cork Protocol Inc. (Delaware) and operated by Cork Labs (Cayman Islands). The founding team are serial entrepreneurs with prior DeFi experience. Cork is backed by a16z CSX, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial. Learn more at [cork.tech/about](https://www.cork.tech/about/).
+Cork Protocol is built by Cork Protocol Inc. (Delaware) and operated by Cork Labs (Cayman Islands). The founders are serial entrepreneurs with prior DeFi experience. Cork is backed by a16z CSX, OrangeDAO, Road Capital, BitGo, G-20, and Steakhouse Financial. Learn more at [cork.tech/about](https://www.cork.tech/about/).
 
 #### Who would use Cork?
 

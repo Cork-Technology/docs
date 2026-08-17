@@ -1,20 +1,20 @@
 # OTC trading of Swap Tokens
 
-In order to lock in the fixed yield from underwriting a particular market, the liquidity provider must sell their Cork Swap Tokens in exchange for a premium. Meanwhile, for hedgers to gain access to Swap Tokens, they need a mechanism to transfer their premium payment in exchange for the Swap Tokens. Airswap OTC is battle tested tool which enables such transactions to be made. This guide will explain how to make and take orders on Airswap OTC.
+In order to lock in the fixed yield from underwriting a particular market, the liquidity provider must sell their Cork Swap Tokens in exchange for a premium. Meanwhile, for hedgers to gain access to Swap Tokens, they need a mechanism to transfer their premium payment in exchange for the Swap Tokens. Airswap OTC is a battle-tested tool that enables such transactions. This guide will explain how to make and take orders on Airswap OTC.
 
 
 
 ## Making an order
 
-1. Navigate to [https://www.airswap.xyz/otc](https://www.airswap.xyz/otc) and press start now
+1. Navigate to [https://www.airswap.xyz/otc](https://www.airswap.xyz/otc) and press "Start now"
 2. Press "make an order"
 
 <figure><img src="../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
 
-3. Press "From - Select" and insert the token address of the Cork Swap Token. This can be collected in the dapp in the "Airswap Instructions" page in the mint flow, but can be confirmed separately by the Cork team.&#x20;
+3. Press "From - Select" and insert the token address of the Cork Swap Token. This can be found in the dApp on the "Airswap Instructions" page in the mint flow, and can be confirmed separately with the Cork team.&#x20;
 4. Press "To - ETH" and select the desired payment token, for example USDC.&#x20;
-5. Press "For" and select "Specific Taker", to enable only one counterparty to take the order. Insert the wallet address of the taker.&#x20;
-6. Press "Expires in" and adjust (recommended to approximately 3 days) to enable the taker to complete the order.&#x20;
+5. Press "For" and select "Specific Taker" to enable only one counterparty to take the order. Insert the wallet address of the taker.&#x20;
+6. Press "Expires in" and adjust the duration (approximately 3 days is recommended) to enable the taker to complete the order.&#x20;
 7. Press Continue to advance to the next screen.&#x20;
 
 <figure><img src="../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
@@ -45,7 +45,7 @@ If the above are correct, proceed to press “Approve” which will trigger a to
 
 2. Take the order
 
-Following the approval of the payment token, you are ready to execute the trade by pressing Take which will trigger another transaction in your wallet.
+Following the approval of the payment token, you are ready to execute the trade by pressing Take, which will trigger another transaction in your wallet.
 
 <figure><img src="../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
@@ -53,6 +53,6 @@ Following the approval of the payment token, you are ready to execute the trade 
 
 3. Swap completed
 
-After the transaction is completed, your Swap Tokens will directly arrive in your wallet.
+After the transaction is completed, your Swap Tokens will arrive directly in your wallet.
 
 <figure><img src="../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
