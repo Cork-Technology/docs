@@ -6,7 +6,7 @@ description: How to Swap reference assets for collateral assets using Cork Swap 
 
 Cork [**Swap Tokens**](../../core-concepts/swap-token.md) provide protection against credit and duration risks.
 
-Swap [**reference asset**](../../core-concepts/reference-asset.md) into [**collateral asset**](../../core-concepts/collateral-asset.md), by exercising your Cork [**Swap Token**](../../core-concepts/swap-token.md) (cST) against a [**Cork Pool**](../../core-concepts/cork-pool.md)**.**
+Swap [**reference asset**](../../core-concepts/reference-asset.md) into [**collateral asset**](../../core-concepts/collateral-asset.md) by exercising your Cork [**Swap Token**](../../core-concepts/swap-token.md) (cST) against a [**Cork Pool**](../../core-concepts/cork-pool.md)**.**
 
 
 
@@ -14,7 +14,7 @@ This **"Swap /** **Exercise" operation** on Cork:
 
 * Exercises an amount of your Cork [**Swap Token**](../../core-concepts/swap-token.md) (i.e. reduces the token's circulating supply)
 * Releases an equivalent amount of [**Collateral Asset**](../../core-concepts/collateral-asset.md) from one of many [**Cork Pools**](../../core-concepts/cork-pool.md)
-  * This amount is 1:1 as the Cork [**Swap Token**](../../core-concepts/swap-token.md) exercised, minus a nominal swap fee.
+  * This amount is 1:1 with the Cork [**Swap Token**](../../core-concepts/swap-token.md) exercised, minus a nominal swap fee.
 * Locks up "some fair amount" of your [**Reference Asset**](../../core-concepts/reference-asset.md) in exchange.
   * This amount is determined by the **Exchange Rate**, which is a dynamic rate based on the current relative valuation between the [**Reference Asset**](../../core-concepts/reference-asset.md) and [**Collateral Asset**](../../core-concepts/collateral-asset.md)**.**
 
@@ -22,10 +22,10 @@ This **"Swap /** **Exercise" operation** on Cork:
 
 ## Exchange Rate
 
-The **Exchange Rate** is a dynamic rate that applies to each [**Cork Pool**](../../core-concepts/cork-pool.md)**,** based on the current relative valuation between its [**Reference Asset**](../../core-concepts/reference-asset.md) and [**Collateral Asset**](../../core-concepts/collateral-asset.md)**.** This dynamic **Exchange Rate** is driven by a **Rate Oracle**, that ensures its liveliness.
+The **Exchange Rate** is a dynamic rate that applies to each [**Cork Pool**](../../core-concepts/cork-pool.md)**,** based on the current relative valuation between its [**Reference Asset**](../../core-concepts/reference-asset.md) and [**Collateral Asset**](../../core-concepts/collateral-asset.md)**.** This dynamic **Exchange Rate** is driven by a **Rate Oracle** that ensures its liveness.
 
 * If either asset is backed by underlying assets, the **Rate Oracle** is configured to reference the value of the underlying assets as reported by each asset’s fundamental oracle, which is typically operated by the asset issuer.
-* Price Feeds (market-based) operated by Chainlink Oracles, are then applied to determine the prevailing relative valuation between the [**Reference Asset**](../../core-concepts/reference-asset.md) and [**Collateral Asset**](../../core-concepts/collateral-asset.md) to obtain the incoming **Exchange Rate**.
+* Price Feeds (market-based) operated by Chainlink Oracles are then applied to determine the prevailing relative valuation between the [**Reference Asset**](../../core-concepts/reference-asset.md) and [**Collateral Asset**](../../core-concepts/collateral-asset.md) to obtain the incoming **Exchange Rate**.
 * As this **Exchange Rate** can vary greatly, depending on what’s reported by 3rd-party oracles operating outside of Cork’s control, an upper and lower limit is applied by the Cork Protocol to ensure that the **Exchange Rate** is range-bound or constrained.
 * The upper limit (i.e. ceiling) is referred to as the **Max Rate**, while the lower limit (i.e. floor) is referred to as the **Min Rate**.
 
@@ -41,7 +41,7 @@ When exercising your Cork Swap Token (cST), you may choose to specify either the
 * amount of [**Swap Token**](../../core-concepts/swap-token.md) to exercise/spend, or the
 * net amount of [**Collateral Asset**](../../core-concepts/collateral-asset.md) to receive (after fees).
 
-Either way, you will need to account for the **Variation Margin**, which is caused by the difference between the last observed **Exchange Rate**, and the final **Exchange Rate** during settlement (i.e. at the transaction confirmation block height).
+Either way, you will need to account for the **Variation Margin**, which is caused by the difference between the last observed **Exchange Rate** and the final **Exchange Rate** during settlement (i.e. at the transaction confirmation block height).
 
 Continue reading below to learn more, or jump straight to the individual guides (sub-pages) tailored to each scenario.
 
@@ -72,7 +72,7 @@ As there is a chance that a **greater spending amount** is required for each swa
 This **Spare Allowance Requirement** applies when submitting either via:
 
 * a multisig wallet like safe.global
-* an EoA wallet or MPC wallet
+* an EOA wallet or MPC wallet
 * a smart contract (including vaults and wrappers) while specifying a **fixed** amount.
 {% endhint %}
 

@@ -11,7 +11,7 @@ Provide cover by depositing [**collateral assets**](../../core-concepts/collater
 This **"Mint" operation** on Cork:
 
 * deposits [**Collateral Asset**](../../core-concepts/collateral-asset.md) into one of many [**Cork Pools**](../../core-concepts/cork-pool.md)
-* mints share tokens (i.e. increases circulating supply of cPT & cST tokens of that Cork Pool)
+* mints share tokens (i.e. increases the circulating supply of cPT & cST tokens of that Cork Pool)
 
 ***
 
@@ -35,7 +35,7 @@ You will be performing a trust-minimized escrowed operation. This is enforced by
 ***
 
 {% hint style="info" %}
-The instructions below are prepared using SAFE Wallet by SAFE Labs (safe.global), but also applies to any atomic [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet.
+The instructions below are prepared using SAFE Wallet by SAFE Labs (safe.global), but also apply to any atomic [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet.
 {% endhint %}
 
 ### Step 1: Open your Wallet's Transaction Builder
@@ -184,7 +184,7 @@ A Bundler contract is analogous to a Router contract, with the added guarantee t
 
 This reduces the need to absolutely verify and place trust in esoteric code when interacting with smart contracts.
 
-By ensuring that each step is verifiable by a mainstream enduser and his wallet, this system achieves greater end-to-end transparency and security.
+By ensuring that each step is verifiable by a mainstream end user and their wallet, this system achieves greater end-to-end transparency and security.
 {% endhint %}
 
 Input the [Bundler3 contract address](https://docs.morpho.org/get-started/resources/addresses/#bundlers) & ABI as shown below.
@@ -303,7 +303,7 @@ Press **\[Create Batch]** and follow these instructions:
 
 Make sure that you see this **"Review and Confirm"** screen.
 
-**Important:** Enable _**atomic batch**_ if asked by your [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet. Using non-atomic batch mode can lead to lost of funds!
+**Important:** Enable _**atomic batch**_ if asked by your [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet. Using non-atomic batch mode can lead to loss of funds!
 
 <figure><img src="../../.gitbook/assets/Screenshot 2026-01-21 at 12.00.02 AM.png" alt=""><figcaption><p>Ensure that there are 2 items (transfer &#x26; multicall) in the Atomic Batch</p></figcaption></figure>
 {% endstep %}
@@ -330,8 +330,8 @@ Press **\[Simulate Batch]** and ensure that the simulated outcomes are as expect
 {% hint style="info" %}
 Cork Phoenix is designed with security as a core principle, going above and beyond on eliminating security footguns:
 
-* Our escrow smart contract immutably enforce all business invariants at every step of execution.
-* The protocol is architected such that all user actions can be fully simulated and reviewed as a single atomic transaction, enabling straightforward and reliable verification before committing anything onchain. (This also applies to legacy wallets without a builtin bundler.)
+* Our escrow smart contract immutably enforces all business invariants at every step of execution.
+* The protocol is architected such that all user actions can be fully simulated and reviewed as a single atomic transaction, enabling straightforward and reliable verification before committing anything onchain. (This also applies to legacy wallets without a built-in bundler.)
 * Key smart contracts have easily identifiable addresses, making review straightforward.
 {% endhint %}
 {% endstep %}
@@ -381,7 +381,7 @@ Each cosigner ensures that the batch's `messageHash` , displayed on their signin
 {% step %}
 ### Execute the Batch
 
-Once the threshold of cosigners have approved the batch, one of the wallet owners/cosigners has to execute the batched transaction and pay gas.
+Once the required threshold of cosigners has approved the batch, one of the wallet owners/cosigners has to execute the batched transaction and pay gas.
 {% endstep %}
 {% endstepper %}
 

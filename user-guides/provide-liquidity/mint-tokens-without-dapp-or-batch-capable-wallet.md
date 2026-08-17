@@ -11,7 +11,7 @@ Provide cover by depositing [**collateral assets**](../../core-concepts/collater
 This **"Mint" operation** on Cork:
 
 * deposits [**Collateral Asset**](../../core-concepts/collateral-asset.md) into one of many [**Cork Pools**](../../core-concepts/cork-pool.md)
-* mints share tokens (i.e. increases circulating supply of cPT & cST tokens of that Cork Pool)
+* mints share tokens (i.e. increases the circulating supply of cPT & cST tokens of that Cork Pool)
 
 ***
 
@@ -25,7 +25,7 @@ You will be performing a trust-minimized escrowed operation. This is enforced by
 
 * The Cork Pool's market id (bytes32).
   * A balance of [**Collateral Asset**](../../core-concepts/collateral-asset.md) **(CA)** that pertains to this [**Cork Pool**](../../core-concepts/cork-pool.md).
-* An EoA or Legacy wallet that does not support _atomic batching —_ i.e _**not** an_ [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet such as a SAFE Wallet or an Account-Abstraction Wallet.
+* An EOA or legacy wallet that does not support _atomic batching —_ i.e. _**not** an_ [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet such as a SAFE Wallet or an Account-Abstraction Wallet.
   * For your own safety, you are advised to use a wallet that supports clear signing (i.e. some form of calldata and bundle visualization) that improves opsec.
 * Completed a due diligence audit of the `safeDeposit` function on `Line 126` of the escrow manager contract (CorkAdapter) at its live deployment address via either:
   * **Sourcify.dev:** [https://repo.sourcify.dev/1/0xCCcCcCCCcccCBaD6F772a511B337d9CCc9570407](https://repo.sourcify.dev/1/0xCCcCcCCCcccCBaD6F772a511B337d9CCc9570407)
@@ -35,7 +35,7 @@ You will be performing a trust-minimized escrowed operation. This is enforced by
 ***
 
 {% hint style="info" %}
-These instructions are for wallets that do not support atomic batch transactions. If you have an _atomic_ EIP-5792 capable wallet such as SAFE Wallet by safe.global (previously Gnosis SAFE), it is recommended to use [this guide](mint-tokens-without-dapp.md) instead as it requires fewer steps and saves gas.
+These instructions are for wallets that do not support atomic batch transactions. If you have an _atomic_ EIP-5792 capable wallet such as SAFE Wallet by safe.global (previously Gnosis SAFE), it is recommended to use [this guide](mint-tokens-without-dapp.md) instead, as it requires fewer steps and saves gas.
 {% endhint %}
 
 ### Step 1: Open your Chain Explorer's Transaction Builder
@@ -177,7 +177,7 @@ Input these parameters into the "erc20TransferFrom" form linked [here](https://e
     * **receiver** (address)
       * The escrow contract address: `0xCCcCcCCCcccCBaD6F772a511B337d9CCc9570407`
     * **amount** (uint256)
-      * The wei amount of collateral assets to deposit. Must be **lesser or the same** as the wei amount allowed to be spent in [Step 2](mint-tokens-without-dapp-or-batch-capable-wallet.md#step-2-perform-transaction-1-allow-spending-of-collateral-assets-by-the-escrow-contract). Copy and paste this from a token [unit-converter](https://converter.swiss-knife.xyz/eth).
+      * The wei amount of collateral assets to deposit. Must be **less than or equal to** the wei amount allowed to be spent in [Step 2](mint-tokens-without-dapp-or-batch-capable-wallet.md#step-2-perform-transaction-1-allow-spending-of-collateral-assets-by-the-escrow-contract). Copy and paste this from a token [unit-converter](https://converter.swiss-knife.xyz/eth).
 * Press **\[Copy calldata]**.
 
 <figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption><p>Input transaction details and press [Copy calldata]</p></figcaption></figure>
@@ -254,7 +254,7 @@ A Bundler contract is analogous to a Router contract, with the added guarantee t
 
 This reduces the need to absolutely verify and place trust in esoteric code when interacting with smart contracts.
 
-By ensuring that each step is verifiable by a mainstream enduser and his wallet, this system achieves greater end-to-end transparency and security.
+By ensuring that each step is verifiable by a mainstream end user and their wallet, this system achieves greater end-to-end transparency and security.
 {% endhint %}
 
 Press the search button on the top-right of the Blockchain Explorer page and input the [Bundler3 contract address](https://docs.morpho.org/get-started/resources/addresses/#bundlers) as shown below.
@@ -308,8 +308,8 @@ Unlock your connected wallet, and press **\[Simulate]**.
 {% hint style="info" %}
 Cork Phoenix is designed with security as a core principle, going above and beyond on eliminating security footguns:
 
-* Our escrow smart contract immutably enforce all business invariants at every step of execution.
-* The protocol is architected such that all user actions can be fully simulated and reviewed as a single atomic transaction, enabling straightforward and reliable verification before committing anything onchain. (This includes legacy wallets without a builtin bundler.)
+* Our escrow smart contract immutably enforces all business invariants at every step of execution.
+* The protocol is architected such that all user actions can be fully simulated and reviewed as a single atomic transaction, enabling straightforward and reliable verification before committing anything onchain. (This includes legacy wallets without a built-in bundler.)
 * Key smart contracts have easily identifiable addresses, making review straightforward.
 {% endhint %}
 

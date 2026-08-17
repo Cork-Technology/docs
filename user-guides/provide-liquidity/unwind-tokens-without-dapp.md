@@ -11,7 +11,7 @@ Withdraw collateral assets from a [Cork Pool](../../core-concepts/cork-pool.md) 
 
 This operation, called an "Unwind Mint":
 
-* returns and burns shares (i.e. reduces circulating supply of cPT & cST tokens)
+* returns and burns shares (i.e. reduces the circulating supply of cPT & cST tokens)
 * withdraws [Collateral Asset](../../core-concepts/collateral-asset.md)
 
 ## **How to Redeem Shares via an Escrowed Unwind-Mint**
@@ -33,7 +33,7 @@ You will be performing a trust-minimized escrowed operation. This is enforced by
 ***
 
 {% hint style="info" %}
-The instructions below are prepared using SAFE Wallet by SAFE Labs (safe.global), but also applies to any atomic [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet.
+The instructions below are prepared using SAFE Wallet by SAFE Labs (safe.global), but also apply to any atomic [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet.
 {% endhint %}
 
 ### Step 1: Open your Wallet's Transaction Builder
@@ -141,7 +141,7 @@ By following these instructions:
 {% step %}
 ### Obtain the Cork Swap Token address
 
-Cork Swap Token (cST) is paired with their corresponding Cork Principal Token (cPT).
+Each Cork Swap Token (cST) is paired with its corresponding Cork Principal Token (cPT).
 
 Using the [Cork Pool](../../core-concepts/cork-pool.md) id, the cPT address and cST address may be obtained by calling `CorkPoolManager.shares(poolId)` using either:
 
@@ -275,7 +275,7 @@ Verify that transaction #3 has been added to the Transactions Batch.
 
 ***
 
-### Step 4: Create, Review & Simulate Batch
+### Step 5: Create, Review & Simulate Batch
 
 Press \[Create Batch] and follow these instructions:
 
@@ -285,7 +285,7 @@ Press \[Create Batch] and follow these instructions:
 
 Make sure that you see this "Review and Confirm" screen.
 
-**Important:** Enable _**atomic batch**_ if asked by your [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet. Using non-atomic batch mode can lead to lost of funds!
+**Important:** Enable _**atomic batch**_ if asked by your [EIP-5792](https://www.eip5792.xyz/introduction) capable wallet. Using non-atomic batch mode can lead to loss of funds!
 
 <figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.29.12 PM.png" alt=""><figcaption><p>Ensure that there are 3 items in the Atomic Batch</p></figcaption></figure>
 {% endstep %}
@@ -297,9 +297,9 @@ Make sure that you see this "Review and Confirm" screen.
 
 <summary>An example of each transaction in the batch:</summary>
 
-<figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.30.04 PM.png" alt=""><figcaption><p>Ensure that "method", "spender" and "amount" is correct</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.30.04 PM.png" alt=""><figcaption><p>Ensure that "method", "spender" and "amount" are correct</p></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.30.44 PM.png" alt=""><figcaption><p>Ensure that "method", "spender" and "amount" is correct</p></figcaption></figure>
+<figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.30.44 PM.png" alt=""><figcaption><p>Ensure that "method", "spender" and "amount" are correct</p></figcaption></figure>
 
 <figure><img src="../../.gitbook/assets/Screenshot 2026-01-19 at 7.31.42 PM.png" alt=""><figcaption><p>Ensure that "to", "method", and "params" are correct </p></figcaption></figure>
 
@@ -321,7 +321,7 @@ Once the simulation has completed successfully, press \[Send Batch].
 
 ***
 
-### Step 5: Sign and Execute transaction
+### Step 6: Sign and Execute transaction
 
 Ask each co-signer/co-owner to follow these instructions:
 
@@ -349,13 +349,13 @@ Each cosigner ensures that the batch's `safeTxHash` (or EIP-712  `messageHash`),
 {% step %}
 ### Execute the Batch
 
-Once the threshold of cosigners have approved the batch, one of the wallet owners/signers has to execute the transaction (using the wallet) and pay gas.
+Once the required threshold of cosigners has approved the batch, one of the wallet owners/signers has to execute the transaction (using the wallet) and pay gas.
 {% endstep %}
 {% endstepper %}
 
 ***
 
-### Step 6: Wait for Confirmation and Verify token balances&#x20;
+### Step 7: Wait for Confirmation and Verify token balances&#x20;
 
 Once the batch transaction is confirmed, follow your wallet-specific instructions to check your collateral asset balance.
 
